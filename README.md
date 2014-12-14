@@ -43,5 +43,4 @@ $worker = $service->createIdWorker(new RegionId(1), new ServerId(1));
 
 $id = $worker->generate();
 // string(10) "4194439168"
-
 ```

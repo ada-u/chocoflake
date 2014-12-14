@@ -1,13 +1,13 @@
 <?php
 
-namespace Adachi\IdGen\Foundation\IdValue\Element;
+namespace Adachi\IdGen\Domain\IdValue\Element;
 
 /**
- * Class Timestamp
+ * Class RegionId
  *
- * @package Adachi\IdGen\Foundation\IdValue\Element
+ * @package Adachi\IdGen\Domain\IdValue\Element
  */
-class Timestamp
+class RegionId
 {
     /**
      * @var int
@@ -23,10 +23,10 @@ class Timestamp
     }
 
     /**
-     * @param Timestamp $target
+     * @param RegionId $target
      * @return bool
      */
-    public function equals(Timestamp $target)
+    public function equals(RegionId $target)
     {
         return $this->value === $target->value;
     }

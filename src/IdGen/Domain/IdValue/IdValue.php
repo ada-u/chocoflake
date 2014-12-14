@@ -1,31 +1,31 @@
 <?php
 
-namespace Adachi\IdGen\Foundation\IdValue;
+namespace Adachi\IdGen\Domain\IdValue;
 
-use Adachi\IdGen\Foundation\IdValue\Element\ServerId;
-use Adachi\IdGen\Foundation\IdValue\Element\Timestamp;
-use Adachi\IdGen\Foundation\IdValue\Element\RegionId;
+use Adachi\IdGen\Domain\IdValue\Element\ServerId;
+use Adachi\IdGen\Domain\IdValue\Element\Timestamp;
+use Adachi\IdGen\Domain\IdValue\Element\RegionId;
 
 /**
  * Class IdValue
  *
- * @package Adachi\IdGen\Foundation\IdValue
+ * @package Adachi\IdGen\Domain\IdValue
  */
 class IdValue
 {
 
     /**
-     * @var \Adachi\IdGen\Foundation\IdValue\Element\Timestamp
+     * @var \Adachi\IdGen\Domain\IdValue\Element\Timestamp
      */
     public $timestamp;
 
     /**
-     * @var \Adachi\IdGen\Foundation\IdValue\Element\RegionId
+     * @var \Adachi\IdGen\Domain\IdValue\Element\RegionId
      */
     public $regionId;
 
     /**
-     * @var \Adachi\IdGen\Foundation\IdValue\Element\ServerId
+     * @var \Adachi\IdGen\Domain\IdValue\Element\ServerId
      */
     public $serverId;
 

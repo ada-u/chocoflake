@@ -1,11 +1,11 @@
 <?php
 
-namespace Adachi\IdGen\Service;
+namespace Adachi\IdGen\Application\Service;
 
-use Adachi\IdGen\Foundation\IdValue\Element\RegionId;
-use Adachi\IdGen\Foundation\IdValue\Element\ServerId;
-use Adachi\IdGen\Foundation\IdValue\IdValueConfig;
-use Adachi\IdGen\Foundation\IdWorker\IdWorker;
+use Adachi\IdGen\Domain\IdValue\Element\RegionId;
+use Adachi\IdGen\Domain\IdValue\Element\ServerId;
+use Adachi\IdGen\Domain\IdValue\IdValueConfig;
+use Adachi\IdGen\Domain\IdValue\IdWorker;
 
 /**
  * Class IdGenService
@@ -15,7 +15,7 @@ use Adachi\IdGen\Foundation\IdWorker\IdWorker;
 class IdGenerateService {
 
     /**
-     * @var \Adachi\IdGen\Foundation\IdValue\IdValueConfig
+     * @var \Adachi\IdGen\Domain\IdValue\IdValueConfig
      */
     protected $config;
 

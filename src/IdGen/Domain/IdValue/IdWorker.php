@@ -1,41 +1,39 @@
 <?php
 
-namespace Adachi\IdGen\Foundation\IdWorker;
+namespace Adachi\IdGen\Domain\IdValue;
 
-use Adachi\IdGen\Foundation\IdValue\Element\RegionId;
-use Adachi\IdGen\Foundation\IdValue\Element\ServerId;
-use Adachi\IdGen\Foundation\IdValue\Element\Timestamp;
-use Adachi\IdGen\Foundation\IdValue\IdValueConfig;
-use Adachi\IdGen\Foundation\IdValue\IdValue;
+use Adachi\IdGen\Domain\IdValue\Element\RegionId;
+use Adachi\IdGen\Domain\IdValue\Element\ServerId;
+use Adachi\IdGen\Domain\IdValue\Element\Timestamp;
 
 /**
  * Class IdWorker
  *
- * @package Adachi\IdGen\Foundation\IdWorker
+ * @package Adachi\IdGen\Domain\IdWorker
  */
 class IdWorker
 {
     /**
-     * @var \Adachi\IdGen\Foundation\IdValue\IdValueConfig
+     * @var \Adachi\IdGen\Domain\IdValue\IdValueConfig
      */
-    protected $config;
+    private $config;
 
     /**
-     * @var \Adachi\IdGen\Foundation\IdValue\Element\RegionId
+     * @var \Adachi\IdGen\Domain\IdValue\Element\RegionId
      */
-    protected $regionId;
+    private $regionId;
 
     /**
-     * @var \Adachi\IdGen\Foundation\IdValue\Element\ServerId
+     * @var \Adachi\IdGen\Domain\IdValue\Element\ServerId
      */
-    protected $serverId;
+    private $serverId;
 
     /**
      * (mutable)
      *
-     * @var \Adachi\IdGen\Foundation\IdValue\Element\Timestamp
+     * @var \Adachi\IdGen\Domain\IdValue\Element\Timestamp
      */
-    protected $lastTimestamp = null;
+    private $lastTimestamp = null;
 
     /**
      * @var int
@@ -82,7 +80,7 @@ class IdWorker
             $value->serverId->value <= $this->config->maxServerId &&
             $value->sequence <= $this->config->maxSequence)
         {
-            return  $this->calculateValue($value->timestamp, $value->regionId, $value->serverId, $value->sequence);
+            return  $this->calculate($value->timestamp, $value->regionId, $value->serverId, $value->sequence);
         }
         else
         {
@@ -91,7 +89,7 @@ class IdWorker
     }
 
     /**
-     * @param $value
+     * @param int $value
      * @return IdValue
      * @throws \RuntimeException
      */
@@ -107,7 +105,7 @@ class IdWorker
             $serverId->value <= $this->config->maxServerId &&
             $sequence <= $this->config->maxSequence)
         {
-            return new IdValue($timestamp, $regionId, $serverId, $sequence, $this->calculateValue($timestamp, $regionId, $serverId, $sequence));
+            return new IdValue($timestamp, $regionId, $serverId, $sequence, $this->calculate($timestamp, $regionId, $serverId, $sequence));
         }
         else
         {
@@ -133,8 +131,10 @@ class IdWorker
 
         if ( ! is_null($this->lastTimestamp) && $timestamp->equals($this->lastTimestamp))
         {
-            // Increment sequence
+            // Get
             $sequence = (shm_get_var($memory, self::SHM_SEQUENCE) + 1) & $this->config->sequenceMask;
+
+            // Increment sequence
             shm_put_var($memory, self::SHM_SEQUENCE, $sequence);
 
             if ($sequence === 0)
@@ -159,7 +159,7 @@ class IdWorker
         // Update lastTimestamp
         $this->lastTimestamp = $timestamp;
 
-        return new IdValue($timestamp, $this->regionId, $this->serverId, $sequence, $this->calculateValue($timestamp, $this->regionId, $this->serverId, $sequence));
+        return new IdValue($timestamp, $this->regionId, $this->serverId, $sequence, $this->calculate($timestamp, $this->regionId, $this->serverId, $sequence));
     }
 
     /**
@@ -179,7 +179,7 @@ class IdWorker
      * @param $sequence
      * @return int
      */
-    protected function calculateValue(Timestamp $timestamp, RegionId $regionId, ServerId $serverId, $sequence)
+    protected function calculate(Timestamp $timestamp, RegionId $regionId, ServerId $serverId, $sequence)
     {
         return ($timestamp->value << $this->config->timestampBitShift) |
                ($regionId->value << $this->config->regionIdBitShift)   |

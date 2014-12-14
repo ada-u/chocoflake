@@ -1,11 +1,11 @@
 <?php
 
-namespace Adachi\IdGen\Foundation\IdValue;
+namespace Adachi\IdGen\Domain\IdValue;
 
 /**
  * Class IdValueConfig
  *
- * @package Adachi\IdGen\Foundation\IdValueConfig
+ * @package Adachi\IdGen\Domain\IdValueConfig
  */
 class IdValueConfig
 {

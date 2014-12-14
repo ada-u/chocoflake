@@ -1,9 +1,9 @@
 <?php
 
-use Adachi\IdGen\Foundation\IdValue\Element\RegionId;
-use Adachi\IdGen\Foundation\IdValue\Element\ServerId;
-use Adachi\IdGen\Foundation\IdValue\Element\Timestamp;
-use Adachi\IdGen\Foundation\IdValue\IdValueConfig;
+use Adachi\IdGen\Domain\IdValue\Element\RegionId;
+use Adachi\IdGen\Domain\IdValue\Element\ServerId;
+use Adachi\IdGen\Domain\IdValue\Element\Timestamp;
+use Adachi\IdGen\Domain\IdValue\IdValueConfig;
 
 /**
  * Class IdWorkerTest
@@ -12,14 +12,14 @@ class IdWorkerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \Adachi\IdGen\Foundation\IdWorker\IdWorker|Mockery\Mock
+     * @var \Adachi\IdGen\Domain\IdValue\IdWorker|Mockery\Mock
      */
     private $idWorker;
 
     protected function setUp()
     {
         $config = new IdValueConfig(41, 5, 5, 12, 1414334507356);
-        $this->idWorker = Mockery::mock('\Adachi\IdGen\Foundation\IdWorker\IdWorker[generateTimestamp]', [$config, new RegionId(1), new ServerId(1)]);
+        $this->idWorker = Mockery::mock('\Adachi\IdGen\Domain\IdValue\IdWorker[generateTimestamp]', [$config, new RegionId(1), new ServerId(1)]);
         $this->idWorker->shouldReceive('generateTimestamp')
             ->andReturn(new Timestamp(1000));
     }
