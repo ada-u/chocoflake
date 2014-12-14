@@ -26,7 +26,6 @@ You can specify any bit length to each element.
 ### Sample
 
 ```php
-
 // example:
 // 41 bit for timestamp
 // 5  bit for region id
