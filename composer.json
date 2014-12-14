@@ -1,0 +1,24 @@
+{
+  "name": "ada-u/php-idgen",
+  "type": "library",
+  "description": "Id Generator for PHP",
+  "keywords": [ "php-idgen", "id", "generator" ],
+  "homepage": "https://github.com/ada-u/php-idgen",
+  "authors": [
+    { "name": "ada-u", "email": "ada-u@ada-u.com" }
+  ],
+  "license": "MIT",
+  "require-dev": {
+    "phpunit/phpunit": "4.4.*",
+    "mockery/mockery": "0.9.*",
+    "satooshi/php-coveralls": "dev-master"
+  },
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Adachi\\IdGen\\": "src/IdGen/"
+    }
+  }
+}
