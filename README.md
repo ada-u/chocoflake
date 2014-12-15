@@ -1,11 +1,11 @@
-# PHP IdGen
+# chocoflake
 
-[![Build Status](https://travis-ci.org/ada-u/php-idgen.svg?branch=master)](https://travis-ci.org/ada-u/php-idgen)
-[![Coverage Status](https://img.shields.io/coveralls/ada-u/php-idgen.svg)](https://coveralls.io/r/ada-u/php-idgen?branch=master)
+[![Build Status](https://travis-ci.org/ada-u/chocoflake.svg?branch=master)](https://travis-ci.org/ada-u/chocoflake)
+[![Coverage Status](https://img.shields.io/coveralls/ada-u/chocoflake.svg)](https://coveralls.io/r/ada-u/chocoflake?branch=master)
 
 ### 64bit ID Generator for PHP
 
-`PHP IdGen` is an implementation of twitter Snowflake concept. This provides generating IDs based on time in a distributed environment.
+`chocoflake` is an implementation of twitter Snowflake concept. This provides generating IDs based on time in a distributed environment.
 
 ### ID Specification
 
@@ -37,7 +37,7 @@ You can specify any bit length to each element.
 // 1414334507356 - service start epoch (unix timestamp)
 $config = new IdValueConfig(41, 5, 5, 12, 1414334507356);
 
-$service = new IdGenService($config);
+$service = new ChocoflakeService($config);
 
 $worker = $service->createIdWorker(new RegionId(1), new ServerId(1));
 

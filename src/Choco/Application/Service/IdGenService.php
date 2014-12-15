@@ -1,21 +1,21 @@
 <?php
 
-namespace Adachi\IdGen\Application\Service;
+namespace Adachi\Choco\Application\Service;
 
-use Adachi\IdGen\Domain\IdValue\Element\RegionId;
-use Adachi\IdGen\Domain\IdValue\Element\ServerId;
-use Adachi\IdGen\Domain\IdValue\IdValueConfig;
-use Adachi\IdGen\Domain\IdValue\IdWorker;
+use Adachi\Choco\Domain\IdValue\Element\RegionId;
+use Adachi\Choco\Domain\IdValue\Element\ServerId;
+use Adachi\Choco\Domain\IdValue\IdValueConfig;
+use Adachi\Choco\Domain\IdValue\IdWorker;
 
 /**
- * Class IdGenService
+ * Class ChocoflakeService
  *
- * @package Adachi\IdGen\Service
+ * @package Adachi\Choco\Service
  */
-class IdGenerateService {
+class ChocoflakeService {
 
     /**
-     * @var \Adachi\IdGen\Domain\IdValue\IdValueConfig
+     * @var \Adachi\Choco\Domain\IdValue\IdValueConfig
      */
     protected $config;
 

@@ -1,9 +1,9 @@
 {
-  "name": "ada-u/php-idgen",
+  "name": "ada-u/chocoflake",
   "type": "library",
-  "description": "Id Generator for PHP",
-  "keywords": [ "php-idgen", "id", "generator" ],
-  "homepage": "https://github.com/ada-u/php-idgen",
+  "description": "64bit time based id generator",
+  "keywords": [ "chocoflake", "id", "generator", "idgen" ],
+  "homepage": "https://github.com/ada-u/chocoflake",
   "authors": [
     { "name": "ada-u", "email": "ada-u@ada-u.com" }
   ],
@@ -18,7 +18,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Adachi\\IdGen\\": "src/IdGen/"
+      "Adachi\\Choco\\": "src/Choco/"
     }
   }
 }

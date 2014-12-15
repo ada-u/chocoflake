@@ -1,13 +1,13 @@
 <?php
 
-namespace Adachi\IdGen\Domain\IdValue\Element;
+namespace Adachi\Choco\Domain\IdValue\Element;
 
 /**
- * Class ServerId
+ * Class RegionId
  *
- * @package Adachi\IdGen\Domain\IdValue\Element
+ * @package Adachi\Choco\Domain\IdValue\Element
  */
-class ServerId
+class RegionId
 {
     /**
      * @var int
@@ -23,10 +23,10 @@ class ServerId
     }
 
     /**
-     * @param ServerId $target
+     * @param RegionId $target
      * @return bool
      */
-    public function equals(ServerId $target)
+    public function equals(RegionId $target)
     {
         return $this->value === $target->value;
     }

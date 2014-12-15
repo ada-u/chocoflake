@@ -1,37 +1,37 @@
 <?php
 
-namespace Adachi\IdGen\Domain\IdValue;
+namespace Adachi\Choco\Domain\IdValue;
 
-use Adachi\IdGen\Domain\IdValue\Element\RegionId;
-use Adachi\IdGen\Domain\IdValue\Element\ServerId;
-use Adachi\IdGen\Domain\IdValue\Element\Timestamp;
+use Adachi\Choco\Domain\IdValue\Element\RegionId;
+use Adachi\Choco\Domain\IdValue\Element\ServerId;
+use Adachi\Choco\Domain\IdValue\Element\Timestamp;
 
 /**
  * Class IdWorker
  *
- * @package Adachi\IdGen\Domain\IdWorker
+ * @package Adachi\Choco\Domain\IdWorker
  */
 class IdWorker
 {
     /**
-     * @var \Adachi\IdGen\Domain\IdValue\IdValueConfig
+     * @var \Adachi\Choco\Domain\IdValue\IdValueConfig
      */
     private $config;
 
     /**
-     * @var \Adachi\IdGen\Domain\IdValue\Element\RegionId
+     * @var \Adachi\Choco\Domain\IdValue\Element\RegionId
      */
     private $regionId;
 
     /**
-     * @var \Adachi\IdGen\Domain\IdValue\Element\ServerId
+     * @var \Adachi\Choco\Domain\IdValue\Element\ServerId
      */
     private $serverId;
 
     /**
      * (mutable)
      *
-     * @var \Adachi\IdGen\Domain\IdValue\Element\Timestamp
+     * @var \Adachi\Choco\Domain\IdValue\Element\Timestamp
      */
     private $lastTimestamp = null;
 

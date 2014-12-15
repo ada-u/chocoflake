@@ -1,13 +1,13 @@
 <?php
 
-namespace Adachi\IdGen\Domain\IdValue\Element;
+namespace Adachi\Choco\Domain\IdValue\Element;
 
 /**
- * Class Timestamp
+ * Class ServerId
  *
- * @package Adachi\IdGen\Domain\IdValue\Element
+ * @package Adachi\Choco\Domain\IdValue\Element
  */
-class Timestamp
+class ServerId
 {
     /**
      * @var int
@@ -23,10 +23,10 @@ class Timestamp
     }
 
     /**
-     * @param Timestamp $target
+     * @param ServerId $target
      * @return bool
      */
-    public function equals(Timestamp $target)
+    public function equals(ServerId $target)
     {
         return $this->value === $target->value;
     }
