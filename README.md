@@ -45,5 +45,5 @@ $id = $worker->generate();
 // string(10) "4194439168"
 ```
 
-### LICENSE
+### License
 This software is released under the MIT License, see LICENSE
