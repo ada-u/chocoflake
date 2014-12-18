@@ -7,17 +7,6 @@
 
 `chocoflake` is an implementation of twitter Snowflake concept. This provides generating IDs based on time in a distributed environment.
 
-### ID Specification
-
-The IDs consist of four elements:
-
- - timestamp
- - region id
- - server id
- - sequence
-
-You can specify any bit length to each element.
-
 ## Usage
 
 ### Prerequisites
@@ -25,6 +14,26 @@ You can specify any bit length to each element.
  - PHP 5.4 or later
 
 ### Installation
+
+#### Command
+
+```sh
+$ composer.phar require ada-u/chocoflake:dev-master
+```
+
+#### composer.json
+
+```json
+{
+  "require": {
+    "ada-u/chocoflake": "dev-master"
+  }
+}
+```
+
+```sh
+$ composer.phar install
+```
 
 ### Sample
 
@@ -44,6 +53,19 @@ $worker = $service->createIdWorker(new RegionId(1), new ServerId(1));
 $id = $worker->generate();
 // string(10) "4194439168"
 ```
+
+### ID Specification
+
+The IDs consist of four elements:
+
+ - timestamp
+ - region id
+ - server id
+ - sequence
+
+You can specify any bit length to each element.
+
+
 
 ### License
 This software is released under the MIT License, see LICENSE
