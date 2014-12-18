@@ -7,7 +7,7 @@ namespace Adachi\Choco\Domain\IdValue\Element;
  *
  * @package Adachi\Choco\Domain\IdValue\Element
  */
-class ServerId
+class ServerId implements ElementInterface
 {
     /**
      * @var int

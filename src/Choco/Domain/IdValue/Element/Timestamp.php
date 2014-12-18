@@ -7,7 +7,7 @@ namespace Adachi\Choco\Domain\IdValue\Element;
  *
  * @package Adachi\Choco\Domain\IdValue\Element
  */
-class Timestamp
+class Timestamp implements ElementInterface
 {
     /**
      * @var int

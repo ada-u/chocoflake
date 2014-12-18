@@ -78,12 +78,9 @@ class IdWorker
         if ($value->timestamp->getValue() <= $this->config->getMaxTimestamp() &&
             $value->regionId->getValue() <= $this->config->getMaxRegionId() &&
             $value->serverId->getValue() <= $this->config->getMaxServerId() &&
-            $value->sequence <= $this->config->getMaxSequence())
-        {
+            $value->sequence <= $this->config->getMaxSequence()) {
             return  $this->calculate($value->timestamp, $value->regionId, $value->serverId, $value->sequence);
-        }
-        else
-        {
+        } else {
             throw new \RuntimeException("IdValue Specification is not satisfied");
         }
     }
@@ -103,12 +100,9 @@ class IdWorker
         if ($timestamp->getValue() <= $this->config->getMaxTimestamp() &&
             $regionId->getValue() <= $this->config->getMaxRegionId() &&
             $serverId->getValue() <= $this->config->getMaxServerId() &&
-            $sequence <= $this->config->getMaxSequence())
-        {
+            $sequence <= $this->config->getMaxSequence()) {
             return new IdValue($timestamp, $regionId, $serverId, $sequence, $this->calculate($timestamp, $regionId, $serverId, $sequence));
-        }
-        else
-        {
+        } else {
             throw new \RuntimeException("IdValue Specification is not satisfied");
         }
     }
@@ -129,22 +123,18 @@ class IdWorker
 
         $sequence = 0;
 
-        if ( ! is_null($this->lastTimestamp) && $timestamp->equals($this->lastTimestamp))
-        {
+        if (! is_null($this->lastTimestamp) && $timestamp->equals($this->lastTimestamp)) {
             // Get
             $sequence = (shm_get_var($memory, self::SHM_SEQUENCE) + 1) & $this->config->getSequenceMask();
 
             // Increment sequence
             shm_put_var($memory, self::SHM_SEQUENCE, $sequence);
 
-            if ($sequence === 0)
-            {
+            if ($sequence === 0) {
                 usleep(1000);
                 $timestamp = $this->generateTimestamp();
             }
-        }
-        else
-        {
+        } else {
             // Reset sequence if timestamp is different from last one.
             $sequence = 0;
             shm_put_var($memory, self::SHM_SEQUENCE, $sequence);

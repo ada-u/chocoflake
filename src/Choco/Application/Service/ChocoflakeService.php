@@ -12,7 +12,8 @@ use Adachi\Choco\Domain\IdValue\IdWorker;
  *
  * @package Adachi\Choco\Service
  */
-class ChocoflakeService {
+class ChocoflakeService
+{
 
     /**
      * @var \Adachi\Choco\Domain\IdValue\IdValueConfig

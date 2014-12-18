@@ -1,6 +1,7 @@
 <?php
 
 namespace Adachi\Choco\Domain\IdValue;
+
 use RuntimeException;
 
 /**
@@ -99,8 +100,7 @@ class IdValueConfig
      */
     public function __construct($timestampBitLength, $regionIdBitLength, $serverIdBitLength, $sequenceBitLength, $epochOffset)
     {
-        if ($timestampBitLength + $regionIdBitLength + $serverIdBitLength + $sequenceBitLength > 63)
-        {
+        if ($timestampBitLength + $regionIdBitLength + $serverIdBitLength + $sequenceBitLength > 63) {
             throw new RuntimeException("IdValue bit length must be less than 64 bit.");
         }
         $this->timestampBitLength = $timestampBitLength;
@@ -251,5 +251,4 @@ class IdValueConfig
     {
         return $this->epoch;
     }
-
 }

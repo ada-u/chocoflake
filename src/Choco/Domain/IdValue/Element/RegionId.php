@@ -7,7 +7,7 @@ namespace Adachi\Choco\Domain\IdValue\Element;
  *
  * @package Adachi\Choco\Domain\IdValue\Element
  */
-class RegionId
+class RegionId implements ElementInterface
 {
     /**
      * @var int
