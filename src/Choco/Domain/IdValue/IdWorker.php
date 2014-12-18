@@ -75,10 +75,10 @@ class IdWorker
      */
     public function write(IdValue $value)
     {
-        if ($value->timestamp->value <= $this->config->maxTimestamp &&
-            $value->regionId->value <= $this->config->maxRegionId &&
-            $value->serverId->value <= $this->config->maxServerId &&
-            $value->sequence <= $this->config->maxSequence)
+        if ($value->timestamp->getValue() <= $this->config->getMaxTimestamp() &&
+            $value->regionId->getValue() <= $this->config->getMaxRegionId() &&
+            $value->serverId->getValue() <= $this->config->getMaxServerId() &&
+            $value->sequence <= $this->config->getMaxSequence())
         {
             return  $this->calculate($value->timestamp, $value->regionId, $value->serverId, $value->sequence);
         }
@@ -95,15 +95,15 @@ class IdWorker
      */
     public function read($value)
     {
-        $timestamp = new Timestamp(($value & $this->config->timestampMask) >> $this->config->timestampBitShift);
-        $regionId = new RegionId(($value & $this->config->regionIdMask) >> $this->config->regionIdBitShift);
-        $serverId = new ServerId(($value & $this->config->serverIdMask) >> $this->config->serverIdBitShift);
-        $sequence = ($value & $this->config->sequenceMask);
+        $timestamp = new Timestamp(($value & $this->config->getTimestampMask()) >> $this->config->getTimestampBitShift());
+        $regionId = new RegionId(($value & $this->config->getRegionIdMask()) >> $this->config->getRegionIdBitShift());
+        $serverId = new ServerId(($value & $this->config->getServerIdMask()) >> $this->config->getServerIdBitShift());
+        $sequence = ($value & $this->config->getSequenceMask());
 
-        if ($timestamp->value <= $this->config->maxTimestamp &&
-            $regionId->value <= $this->config->maxRegionId &&
-            $serverId->value <= $this->config->maxServerId &&
-            $sequence <= $this->config->maxSequence)
+        if ($timestamp->getValue() <= $this->config->getMaxTimestamp() &&
+            $regionId->getValue() <= $this->config->getMaxRegionId() &&
+            $serverId->getValue() <= $this->config->getMaxServerId() &&
+            $sequence <= $this->config->getMaxSequence())
         {
             return new IdValue($timestamp, $regionId, $serverId, $sequence, $this->calculate($timestamp, $regionId, $serverId, $sequence));
         }
@@ -132,7 +132,7 @@ class IdWorker
         if ( ! is_null($this->lastTimestamp) && $timestamp->equals($this->lastTimestamp))
         {
             // Get
-            $sequence = (shm_get_var($memory, self::SHM_SEQUENCE) + 1) & $this->config->sequenceMask;
+            $sequence = (shm_get_var($memory, self::SHM_SEQUENCE) + 1) & $this->config->getSequenceMask();
 
             // Increment sequence
             shm_put_var($memory, self::SHM_SEQUENCE, $sequence);
@@ -169,7 +169,7 @@ class IdWorker
     public function generateTimestamp()
     {
         $stamp = (int) round(microtime(true) * 1000);
-        return new Timestamp($stamp - $this->config->epoch);
+        return new Timestamp($stamp - $this->config->getEpoch());
     }
 
     /**
@@ -181,9 +181,9 @@ class IdWorker
      */
     protected function calculate(Timestamp $timestamp, RegionId $regionId, ServerId $serverId, $sequence)
     {
-        return ($timestamp->value << $this->config->timestampBitShift) |
-               ($regionId->value << $this->config->regionIdBitShift)   |
-               ($serverId->value << $this->config->serverIdBitShift)   |
+        return ($timestamp->getValue() << $this->config->getTimestampBitShift()) |
+               ($regionId->getValue() << $this->config->getRegionIdBitShift())   |
+               ($serverId->getValue() << $this->config->getServerIdBitShift())   |
                ($sequence);
     }
 }

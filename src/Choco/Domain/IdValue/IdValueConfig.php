@@ -13,82 +13,82 @@ class IdValueConfig
     /**
      * @var int
      */
-    public $timestampBitLength;
+    private $timestampBitLength;
 
     /**
      * @var int
      */
-    public $regionIdBitLength;
+    private $regionIdBitLength;
 
     /**
      * @var int
      */
-    public $serverIdBitLength;
+    private $serverIdBitLength;
 
     /**
      * @var int
      */
-    public $sequenceBitLength;
+    private $sequenceBitLength;
 
     /**
      * @var int
      */
-    public $maxTimestamp;
+    private $maxTimestamp;
 
     /**
      * @var int
      */
-    public $maxRegionId;
+    private $maxRegionId;
 
     /**
      * @var int
      */
-    public $maxServerId;
+    private $maxServerId;
 
     /**
      * @var int
      */
-    public $maxSequence;
+    private $maxSequence;
 
     /**
      * @var int
      */
-    public $timestampBitShift;
+    private $timestampBitShift;
 
     /**
      * @var int
      */
-    public $regionIdBitShift;
+    private $regionIdBitShift;
 
     /**
      * @var int
      */
-    public $serverIdBitShift;
+    private $serverIdBitShift;
 
     /**
      * @var int
      */
-    public $timestampMask;
+    private $timestampMask;
 
     /**
      * @var int
      */
-    public $regionIdMask;
+    private $regionIdMask;
 
     /**
      * @var int
      */
-    public $serverIdMask;
+    private $serverIdMask;
 
     /**
      * @var int
      */
-    public $sequenceMask;
+    private $sequenceMask;
 
     /**
      * @var int
      */
-    public $epoch;
+    private $epoch;
 
     /**
      * @param int $timestampBitLength
@@ -122,6 +122,134 @@ class IdValueConfig
         $this->regionIdMask = -1 ^ (-1 << ($this->regionIdBitLength + $this->regionIdBitShift));
         $this->serverIdMask = -1 ^ (-1 << ($this->serverIdBitLength + $this->serverIdBitShift));
         $this->sequenceMask = -1 ^ (-1 << $this->sequenceBitLength);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimestampBitLength()
+    {
+        return $this->timestampBitLength;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRegionIdBitLength()
+    {
+        return $this->regionIdBitLength;
+    }
+
+    /**
+     * @return int
+     */
+    public function getServerIdBitLength()
+    {
+        return $this->serverIdBitLength;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSequenceBitLength()
+    {
+        return $this->sequenceBitLength;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxTimestamp()
+    {
+        return $this->maxTimestamp;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxRegionId()
+    {
+        return $this->maxRegionId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxServerId()
+    {
+        return $this->maxServerId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxSequence()
+    {
+        return $this->maxSequence;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimestampBitShift()
+    {
+        return $this->timestampBitShift;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRegionIdBitShift()
+    {
+        return $this->regionIdBitShift;
+    }
+
+    /**
+     * @return int
+     */
+    public function getServerIdBitShift()
+    {
+        return $this->serverIdBitShift;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimestampMask()
+    {
+        return $this->timestampMask;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRegionIdMask()
+    {
+        return $this->regionIdMask;
+    }
+
+    /**
+     * @return int
+     */
+    public function getServerIdMask()
+    {
+        return $this->serverIdMask;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSequenceMask()
+    {
+        return $this->sequenceMask;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEpoch()
+    {
+        return $this->epoch;
     }
 
 }

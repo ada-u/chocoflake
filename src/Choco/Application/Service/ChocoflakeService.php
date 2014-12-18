@@ -17,7 +17,7 @@ class ChocoflakeService {
     /**
      * @var \Adachi\Choco\Domain\IdValue\IdValueConfig
      */
-    protected $config;
+    private $config;
 
     /**
      * @param IdValueConfig $config
