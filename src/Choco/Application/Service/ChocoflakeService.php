@@ -5,7 +5,7 @@ namespace Adachi\Choco\Application\Service;
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\IdValueConfig;
-use Adachi\Choco\Domain\IdValue\IdWorker;
+use Adachi\Choco\Domain\IdWorker\IdWorker;
 
 /**
  * Class ChocoflakeService

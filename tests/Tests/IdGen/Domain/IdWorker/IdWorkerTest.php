@@ -12,14 +12,14 @@ class IdWorkerTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \Adachi\Choco\Domain\IdValue\IdWorker|Mockery\Mock
+     * @var \Adachi\Choco\Domain\IdWorker\IdWorker|Mockery\Mock
      */
     private $idWorker;
 
     protected function setUp()
     {
         $config = new IdValueConfig(41, 5, 5, 12, 1414334507356);
-        $this->idWorker = Mockery::mock('\Adachi\Choco\Domain\IdValue\IdWorker[generateTimestamp]', [$config, new RegionId(1), new ServerId(1)]);
+        $this->idWorker = Mockery::mock('\Adachi\Choco\Domain\IdWorker\IdWorker[generateTimestamp]', [$config, new RegionId(1), new ServerId(1)]);
         $this->idWorker->shouldReceive('generateTimestamp')
             ->andReturn(new Timestamp(1000));
     }

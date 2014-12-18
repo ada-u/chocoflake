@@ -1,10 +1,12 @@
 <?php
 
-namespace Adachi\Choco\Domain\IdValue;
+namespace Adachi\Choco\Domain\IdWorker;
 
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
+use Adachi\Choco\Domain\IdValue\IdValue;
+use Adachi\Choco\Domain\IdValue\IdValueConfig;
 
 /**
  * Class IdWorker
