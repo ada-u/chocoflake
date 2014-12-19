@@ -31,7 +31,7 @@ gulp.task('test', function(done){
 });
 
 gulp.task('inspect', function(done){
-    exec('vendor/bin/php-cs-fixer fix src/ --verbose --dry-run --diff', function(err, stdout, stderr){
+    exec('vendor/bin/php-cs-fixer fix src/ --verbose --diff', function(err, stdout, stderr){
         console.log(stdout);
         console.error(stderr);
         done();
