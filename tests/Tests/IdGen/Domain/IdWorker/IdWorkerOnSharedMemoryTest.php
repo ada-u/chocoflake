@@ -3,12 +3,12 @@
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
-use Adachi\Choco\Domain\IdValue\IdValueConfig;
+use Adachi\Choco\Domain\IdConfig\IdConfig;
 
 /**
  * Class IdWorkerTest
  */
-class IdWorkerTest extends PHPUnit_Framework_TestCase
+class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
 {
 
     /**
@@ -18,7 +18,7 @@ class IdWorkerTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $config = new IdValueConfig(41, 5, 5, 12, 1414334507356);
+        $config = new IdConfig(41, 5, 5, 12, 1414334507356);
         $this->idWorker = Mockery::mock('\Adachi\Choco\Domain\IdWorker\SharedMemory\IdWorkerOnSharedMemory[generateTimestamp]', [$config, new RegionId(1), new ServerId(1)]);
         $this->idWorker->shouldReceive('generateTimestamp')
             ->andReturn(new Timestamp(1000));

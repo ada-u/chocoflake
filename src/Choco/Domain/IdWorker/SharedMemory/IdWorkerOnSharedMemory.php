@@ -4,9 +4,8 @@ namespace Adachi\Choco\Domain\IdWorker\SharedMemory;
 
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
-use Adachi\Choco\Domain\IdValue\Element\Timestamp;
 use Adachi\Choco\Domain\IdValue\IdValue;
-use Adachi\Choco\Domain\IdValue\IdValueConfig;
+use Adachi\Choco\Domain\IdConfig\IdConfig;
 use Adachi\Choco\Domain\IdWorker\AbstractIdWorker;
 use Adachi\Choco\Domain\IdWorker\IdWorkerInterface;
 
@@ -36,12 +35,12 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
     const SHM_SEQUENCE = 54321;
 
     /**
-     * @param IdValueConfig $config
+     * @param IdConfig $config
      * @param RegionId $regionId
      * @param ServerId $serverId
      * @param int $semaphoreId
      */
-    public function __construct(IdValueConfig $config, RegionId $regionId, ServerId $serverId, $semaphoreId = 45454)
+    public function __construct(IdConfig $config, RegionId $regionId, ServerId $serverId, $semaphoreId = 45454)
     {
         $this->config = $config;
         $this->regionId = $regionId;

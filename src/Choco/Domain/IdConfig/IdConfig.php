@@ -1,15 +1,15 @@
 <?php
 
-namespace Adachi\Choco\Domain\IdValue;
+namespace Adachi\Choco\Domain\IdConfig;
 
 use RuntimeException;
 
 /**
- * Class IdValueConfig
+ * Class IdConfig
  *
- * @package Adachi\Choco\Domain\IdValueConfig
+ * @package Adachi\Choco\Domain\IdConfig
  */
-class IdValueConfig
+class IdConfig
 {
     /**
      * @var int

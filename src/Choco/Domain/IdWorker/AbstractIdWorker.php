@@ -10,7 +10,7 @@ use Adachi\Choco\Domain\IdValue\IdValue;
 abstract class AbstractIdWorker implements IdWorkerInterface
 {
     /**
-     * @var \Adachi\Choco\Domain\IdValue\IdValueConfig
+     * @var \Adachi\Choco\Domain\IdConfig\IdConfig
      */
     protected $config;
 

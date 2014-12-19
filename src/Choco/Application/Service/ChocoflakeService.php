@@ -4,8 +4,7 @@ namespace Adachi\Choco\Application\Service;
 
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
-use Adachi\Choco\Domain\IdValue\IdValueConfig;
-use Adachi\Choco\Domain\IdWorker\IdWorker;
+use Adachi\Choco\Domain\IdConfig\IdConfig;
 use Adachi\Choco\Domain\IdWorker\SharedMemory\IdWorkerOnSharedMemory;
 
 /**
@@ -17,14 +16,14 @@ class ChocoflakeService
 {
 
     /**
-     * @var \Adachi\Choco\Domain\IdValue\IdValueConfig
+     * @var \Adachi\Choco\Domain\IdConfig\IdConfig
      */
     private $config;
 
     /**
-     * @param IdValueConfig $config
+     * @param IdConfig $config
      */
-    public function __construct(IdValueConfig $config)
+    public function __construct(IdConfig $config)
     {
         $this->config = $config;
     }
