@@ -6,6 +6,7 @@ use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\IdValueConfig;
 use Adachi\Choco\Domain\IdWorker\IdWorker;
+use Adachi\Choco\Domain\IdWorker\SharedMemory\IdWorkerOnSharedMemory;
 
 /**
  * Class ChocoflakeService
@@ -31,10 +32,10 @@ class ChocoflakeService
     /**
      * @param RegionId $regionId
      * @param ServerId $serverId
-     * @return IdWorker
+     * @return IdWorkerOnSharedMemory
      */
-    public function createIdWorker(RegionId $regionId, ServerId $serverId)
+    public function createWorkerOnSharedMemory(RegionId $regionId, ServerId $serverId)
     {
-        return new IdWorker($this->config, $regionId, $serverId);
+        return new IdWorkerOnSharedMemory($this->config, $regionId, $serverId);
     }
 }

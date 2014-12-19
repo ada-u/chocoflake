@@ -1,19 +1,20 @@
 <?php
 
-namespace Adachi\Choco\Domain\IdWorker;
+namespace Adachi\Choco\Domain\IdWorker\SharedMemory;
 
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
 use Adachi\Choco\Domain\IdValue\IdValue;
 use Adachi\Choco\Domain\IdValue\IdValueConfig;
+use Adachi\Choco\Domain\IdWorker\IdWorkerInterface;
 
 /**
- * Class IdWorker
+ * Class IdWorkerOnSharedMemory
  *
- * @package Adachi\Choco\Domain\IdWorker
+ * @package Adachi\Choco\Domain\IdWorker\SharedMemory
  */
-class IdWorker
+class IdWorkerOnSharedMemory implements IdWorkerInterface
 {
     /**
      * @var \Adachi\Choco\Domain\IdValue\IdValueConfig
@@ -174,8 +175,8 @@ class IdWorker
     protected function calculate(Timestamp $timestamp, RegionId $regionId, ServerId $serverId, $sequence)
     {
         return ($timestamp->getValue() << $this->config->getTimestampBitShift()) |
-               ($regionId->getValue() << $this->config->getRegionIdBitShift())   |
-               ($serverId->getValue() << $this->config->getServerIdBitShift())   |
-               ($sequence);
+        ($regionId->getValue() << $this->config->getRegionIdBitShift())   |
+        ($serverId->getValue() << $this->config->getServerIdBitShift())   |
+        ($sequence);
     }
 }
