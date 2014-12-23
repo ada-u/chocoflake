@@ -5,6 +5,7 @@ namespace Adachi\Choco\Application\Service;
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdConfig\IdConfig;
+use Adachi\Choco\Domain\IdWorker\Redis\IdWorkerOnRedis;
 use Adachi\Choco\Domain\IdWorker\SharedMemory\IdWorkerOnSharedMemory;
 
 /**
@@ -36,5 +37,16 @@ class ChocoflakeService
     public function createWorkerOnSharedMemory(RegionId $regionId, ServerId $serverId)
     {
         return new IdWorkerOnSharedMemory($this->config, $regionId, $serverId);
+    }
+
+    /**
+     * @param RegionId $regionId
+     * @param ServerId $serverId
+     * @param $credential
+     * @return IdWorkerOnRedis
+     */
+    public function createWorkerOnRedis(RegionId $regionId, ServerId $serverId, $credential)
+    {
+        return new IdWorkerOnRedis($this->config, $regionId, $serverId, $credential);
     }
 }

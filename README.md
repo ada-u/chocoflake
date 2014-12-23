@@ -37,15 +37,17 @@ $ composer.phar install
 
 ### Sample
 
-```php
-// example:
-// 41 bit for timestamp
-// 5  bit for region id
-// 5  bit for server id
-// 12 bit for sequence per milliseconds
-// 1414334507356 - service start epoch (unix timestamp)
-$config = new IdValueConfig(41, 5, 5, 12, 1414334507356);
+Configuration
 
+ - 41 bit        - for timestamp
+ - 5  bit        - for region id
+ - 5  bit        - for server id
+ - 12 bit        - for sequence per milliseconds
+ - 1414334507356 - service start epoch (unix timestamp)
+
+
+```php
+$config = new IdConfig(41, 5, 5, 12, 1414334507356);
 $service = new ChocoflakeService($config);
 
 $worker = $service->createIdWorkerOnSharedMemory(new RegionId(1), new ServerId(1));
@@ -53,6 +55,21 @@ $worker = $service->createIdWorkerOnSharedMemory(new RegionId(1), new ServerId(1
 $id = $worker->generate();
 4194439168
 ```
+
+### ID Generator
+
+I implemented two ID generators, Redis and SharedMemory version.
+
+
+#### SharedMemory version
+
+Using shared memory and semaphore (as mutex) to prevent multiple processes are in the critical section at the same time.
+
+
+#### Redis version
+
+Using Redis atomic increment operation to count up sequence.
+
 
 ### ID Specification
 

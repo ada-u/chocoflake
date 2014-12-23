@@ -5,21 +5,27 @@ use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
 use Adachi\Choco\Domain\IdConfig\IdConfig;
 
+
 /**
- * Class IdWorkerOnSharedMemoryTest
+ * Class IdWorkerOnRedisTest
  */
-class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
+class IdWorkerOnRedisTest extends PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \Adachi\Choco\Domain\IdWorker\SharedMemory\IdWorkerOnSharedMemory|Mockery\Mock
+     * @var \Adachi\Choco\Domain\IdWorker\Redis\IdWorkerOnRedis|Mockery\Mock
      */
     private $idWorker;
 
     protected function setUp()
     {
         $config = new IdConfig(41, 5, 5, 12, 1414334507356);
-        $this->idWorker = Mockery::mock('\Adachi\Choco\Domain\IdWorker\SharedMemory\IdWorkerOnSharedMemory[generateTimestamp]', [$config, new RegionId(1), new ServerId(1)]);
+        $credential = [
+            'scheme'   => 'tcp',
+            'host'     => '127.0.0.1',
+            'port'     => 6379
+        ];
+        $this->idWorker = Mockery::mock('\Adachi\Choco\Domain\IdWorker\Redis\IdWorkerOnRedis[generateTimestamp]', [$config, new RegionId(1), new ServerId(1), $credential]);
         $this->idWorker->shouldReceive('generateTimestamp')
             ->andReturn(new Timestamp(1000));
     }
