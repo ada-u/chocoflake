@@ -10,8 +10,7 @@
   "license": "MIT",
   "require-dev": {
     "phpunit/phpunit": "4.4.*",
-    "fabpot/php-cs-fixer": "dev-master",
-    "mockery/mockery": "0.9.*"
+    "fabpot/php-cs-fixer": "dev-master"
   },
   "require": {
     "php": ">=8.0",
