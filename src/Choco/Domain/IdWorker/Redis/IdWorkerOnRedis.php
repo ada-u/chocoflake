@@ -21,12 +21,12 @@ class IdWorkerOnRedis extends AbstractIdWorker implements IdWorkerInterface
     /**
      * @var array
      */
-    private $credential;
+    private array $credential;
 
     /**
      * @var Client
      */
-    private $redis;
+    private Client $redis;
 
     const REDIS_SEQUENCE_KEY = 'chocolate_counter';
 
@@ -56,7 +56,7 @@ class IdWorkerOnRedis extends AbstractIdWorker implements IdWorkerInterface
     /**
      * @return IdValue
      */
-    public function generate()
+    public function generate(): IdValue
     {
         $timestamp = $this->generateTimestamp();
 

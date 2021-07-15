@@ -12,7 +12,7 @@ interface ElementInterface
     /**
      * @return int
      */
-    public function getValue();
+    public function getValue(): int;
 
     /**
      * @return string

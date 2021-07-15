@@ -20,7 +20,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
      * @var int
      * @fixme refactor
      */
-    private $semaphoreId;
+    private int $semaphoreId;
 
     /**
      * Key name of shared memory block
@@ -40,7 +40,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
      * @param ServerId $serverId
      * @param int $semaphoreId
      */
-    public function __construct(IdConfig $config, RegionId $regionId, ServerId $serverId, $semaphoreId = 45454)
+    public function __construct(IdConfig $config, RegionId $regionId, ServerId $serverId, int $semaphoreId = 45454)
     {
         $this->config = $config;
         $this->regionId = $regionId;

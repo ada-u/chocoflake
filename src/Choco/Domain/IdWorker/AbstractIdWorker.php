@@ -2,6 +2,7 @@
 
 namespace Adachi\Choco\Domain\IdWorker;
 
+use Adachi\Choco\Domain\IdConfig\IdConfig;
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
@@ -10,33 +11,33 @@ use Adachi\Choco\Domain\IdValue\IdValue;
 abstract class AbstractIdWorker implements IdWorkerInterface
 {
     /**
-     * @var \Adachi\Choco\Domain\IdConfig\IdConfig
+     * @var IdConfig
      */
-    protected $config;
+    protected IdConfig $config;
 
     /**
-     * @var \Adachi\Choco\Domain\IdValue\Element\RegionId
+     * @var RegionId
      */
-    protected $regionId;
+    protected RegionId $regionId;
 
     /**
-     * @var \Adachi\Choco\Domain\IdValue\Element\ServerId
+     * @var ServerId
      */
-    protected $serverId;
+    protected ServerId $serverId;
 
     /**
      * (mutable)
      *
-     * @var \Adachi\Choco\Domain\IdValue\Element\Timestamp
+     * @var Timestamp
      */
-    protected $lastTimestamp = null;
+    protected ?Timestamp $lastTimestamp = null;
 
     /**
      * @param IdValue $value
      * @return int
      * @throws \RuntimeException
      */
-    public function write(IdValue $value)
+    public function write(IdValue $value): int
     {
         if ($value->timestamp->getValue() <= $this->config->getMaxTimestamp() &&
             $value->regionId->getValue() <= $this->config->getMaxRegionId() &&
@@ -53,7 +54,7 @@ abstract class AbstractIdWorker implements IdWorkerInterface
      * @return IdValue
      * @throws \RuntimeException
      */
-    public function read($value)
+    public function read($value): IdValue
     {
         $timestamp = new Timestamp(($value & $this->config->getTimestampMask()) >> $this->config->getTimestampBitShift());
         $regionId = new RegionId(($value & $this->config->getRegionIdMask()) >> $this->config->getRegionIdBitShift());
@@ -77,7 +78,7 @@ abstract class AbstractIdWorker implements IdWorkerInterface
      * @param $sequence
      * @return int
      */
-    protected function calculate(Timestamp $timestamp, RegionId $regionId, ServerId $serverId, $sequence)
+    protected function calculate(Timestamp $timestamp, RegionId $regionId, ServerId $serverId, $sequence): int
     {
         return ($timestamp->getValue() << $this->config->getTimestampBitShift()) |
         ($regionId->getValue() << $this->config->getRegionIdBitShift())   |
@@ -89,7 +90,7 @@ abstract class AbstractIdWorker implements IdWorkerInterface
      * @todo make this protected, but it'll be difficult to test. any ideas?
      * @return Timestamp
      */
-    public function generateTimestamp()
+    public function generateTimestamp(): Timestamp
     {
         $stamp = (int) round(microtime(true) * 1000);
         return new Timestamp($stamp - $this->config->getEpoch());

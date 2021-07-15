@@ -12,12 +12,12 @@ class ServerId implements ElementInterface
     /**
      * @var int
      */
-    private $value;
+    private int $value;
 
     /**
      * @param int $value
      */
-    public function __construct($value)
+    public function __construct(int $value)
     {
         $this->value = $value;
     }
@@ -25,7 +25,7 @@ class ServerId implements ElementInterface
     /**
      * @return int
      */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
@@ -34,7 +34,7 @@ class ServerId implements ElementInterface
      * @param ServerId $target
      * @return bool
      */
-    public function equals(ServerId $target)
+    public function equals(ServerId $target): bool
     {
         return $this->value === $target->value;
     }

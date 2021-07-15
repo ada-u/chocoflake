@@ -16,17 +16,17 @@ interface IdWorkerInterface
      * @return int
      * @throws \RuntimeException
      */
-    public function write(IdValue $value);
+    public function write(IdValue $value): int;
 
     /**
      * @param int $value
      * @return IdValue
      * @throws \RuntimeException
      */
-    public function read($value);
+    public function read($value): IdValue;
 
     /**
      * @return IdValue
      */
-    public function generate();
+    public function generate(): IdValue;
 }

@@ -16,7 +16,8 @@
     "php": ">=8.0",
     "mockery/mockery": "1.4.*",
     "predis/predis": "1.1.*",
-    "ext-sysvsem": "*"
+    "ext-sysvsem": "*",
+    "ext-sysvshm": "*"
   },
   "autoload": {
     "psr-4": {
