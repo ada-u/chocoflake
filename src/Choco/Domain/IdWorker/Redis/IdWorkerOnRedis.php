@@ -39,7 +39,7 @@ class IdWorkerOnRedis extends AbstractIdWorker implements IdWorkerInterface
     public function __construct(IdConfig $config,
                                 RegionId $regionId,
                                 ServerId $serverId,
-                                $credential = [
+                                array $credential = [
                                     'scheme'   => 'tcp',
                                     'host'     => '127.0.0.1',
                                     'port'     => 6379
