@@ -14,11 +14,18 @@
   },
   "require": {
     "php": ">=8.0",
-    "predis/predis": "1.1.*"
+    "mockery/mockery": "1.4.*",
+    "predis/predis": "1.1.*",
+    "ext-sysvsem": "*"
   },
   "autoload": {
     "psr-4": {
       "Adachi\\Choco\\": "src/Choco/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Adachi\\Tests\\": "tests/Tests/"
     }
   },
   "config": {

@@ -1,28 +1,33 @@
 <?php
 
+namespace Adachi\Tests\IdGen\Domain\IdWorker;
+
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
 use Adachi\Choco\Domain\IdConfig\IdConfig;
+use Adachi\Choco\Domain\IdWorker\Redis\IdWorkerOnRedis;
+use PHPUnit\Framework\TestCase;
 
+use Mockery;
 
 /**
  * Class IdWorkerOnRedisTest
  */
-class IdWorkerOnRedisTest extends PHPUnit_Framework_TestCase
+class IdWorkerOnRedisTest extends TestCase
 {
 
     /**
-     * @var \Adachi\Choco\Domain\IdWorker\Redis\IdWorkerOnRedis|Mockery\Mock
+     * @var IdWorkerOnRedis|Mockery\Mock
      */
     private $idWorker;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $config = new IdConfig(41, 5, 5, 12, 1414334507356);
         $credential = [
             'scheme'   => 'tcp',
-            'host'     => '127.0.0.1',
+            'host'     => getenv('REDIS_HOST') ?: '127.0.0.1',
             'port'     => 6379
         ];
         $this->idWorker = Mockery::mock('\Adachi\Choco\Domain\IdWorker\Redis\IdWorkerOnRedis[generateTimestamp]', [$config, new RegionId(1), new ServerId(1), $credential]);

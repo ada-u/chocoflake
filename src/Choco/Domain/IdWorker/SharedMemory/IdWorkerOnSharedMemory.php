@@ -51,7 +51,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
     /**
      * @return IdValue
      */
-    public function generate()
+    public function generate(): IdValue
     {
         $timestamp = $this->generateTimestamp();
 
