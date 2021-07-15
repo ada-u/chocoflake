@@ -19,9 +19,7 @@ before_script:
   - composer install
 
 script:
-  - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
+  - phpunit
 
 after_script:
-  - php vendor/bin/coveralls -v
   - php vendor/bin/php-cs-fixer fix src/ --verbose --dry-run --diff
