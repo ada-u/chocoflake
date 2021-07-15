@@ -13,7 +13,7 @@ jobs:
       redis:
         image: 'redis:6.2'
         ports:
-          - 6379/tcp
+          - 6379:6379
         options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Setup PHP with pecl extension
@@ -45,3 +45,5 @@ jobs:
 
       - name: Run test suite
         run: vendor/bin/phpunit
+        env:
+          REDIS_HOST: localhost
