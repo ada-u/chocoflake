@@ -21,5 +21,8 @@
     "psr-4": {
       "Adachi\\Choco\\": "src/Choco/"
     }
+  },
+  "config": {
+    "sort-packages": true
   }
 }
