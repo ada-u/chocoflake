@@ -15,29 +15,29 @@ class IdValue
 {
 
     /**
-     * @var \Adachi\Choco\Domain\IdValue\Element\Timestamp
+     * @var Timestamp
      */
-    public $timestamp;
+    public Timestamp $timestamp;
 
     /**
-     * @var \Adachi\Choco\Domain\IdValue\Element\RegionId
+     * @var RegionId
      */
-    public $regionId;
+    public RegionId $regionId;
 
     /**
-     * @var \Adachi\Choco\Domain\IdValue\Element\ServerId
+     * @var ServerId
      */
-    public $serverId;
-
-    /**
-     * @var int
-     */
-    public $sequence;
+    public ServerId $serverId;
 
     /**
      * @var int
      */
-    protected $value;
+    public int $sequence;
+
+    /**
+     * @var int
+     */
+    protected int $value;
 
     /**
      * @param Timestamp $timestamp
@@ -58,7 +58,7 @@ class IdValue
     /**
      * @return int
      */
-    public function toInt()
+    public function toInt(): int
     {
         return $this->value;
     }
@@ -66,7 +66,7 @@ class IdValue
     /**
      * @return string
      */
-    public function asString()
+    public function asString(): string
     {
         return (string) $this->value;
     }

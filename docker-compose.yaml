@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  php:
+    build: ./docker
+    container_name: php
+    working_dir: /app
+    environment:
+      REDIS_HOST: redis
+    volumes:
+      - ./:/app
+    restart: never
+    depends_on:
+      - redis
+  redis:
+    image: 'redis:6.2'
+    container_name: redis

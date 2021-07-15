@@ -11,7 +11,7 @@
 
 ### Prerequisites
 
- - PHP 5.4 or later
+ - PHP 8.0 or later
 
 ### Installation
 
@@ -82,6 +82,19 @@ The IDs consist of four elements:
 
 You can specify any bit length to each element.
 
+### Test
+
+```bash
+$ docker-compose run php vendor/bin/phpunit
+Creating chocoflake_php_run ... done
+PHPUnit 9.5.6 by Sebastian Bergmann and contributors.
+
+....                                                                4 / 4 (100%)
+
+Time: 00:00.353, Memory: 6.00 MB
+
+OK (4 tests, 4 assertions)
+```
 
 
 ### License
