@@ -1,6 +1,7 @@
 # chocoflake
 
 [![Build Status](https://travis-ci.org/ada-u/chocoflake.svg?branch=master)](https://travis-ci.org/ada-u/chocoflake)
+![Github Actions](https://github.com/ada-u/chocoflake/actions/workflows/php.yml/badge.svg?branch=master)
 [![Coverage Status](https://img.shields.io/coveralls/ada-u/chocoflake.svg)](https://coveralls.io/r/ada-u/chocoflake?branch=master)
 
 ### 64bit ID Generator for PHP
