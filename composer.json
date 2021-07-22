@@ -9,6 +9,7 @@
   ],
   "license": "MIT",
   "require-dev": {
+    "ext-pcntl": "*",
     "phpunit/phpunit": "4.4.*",
     "fabpot/php-cs-fixer": "dev-master",
     "mockery/mockery": "0.9.*"
