@@ -11,7 +11,7 @@
 
 ### Prerequisites
 
- - PHP 5.4 or later
+ - PHP 5.5 or later
 
 ### Installation
 
