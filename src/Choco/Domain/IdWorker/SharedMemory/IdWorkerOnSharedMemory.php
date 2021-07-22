@@ -120,6 +120,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
     }
 
     function __destruct() {
+        // Release the last inserted shared memory.
         $memory = shm_attach(self::SHM_KEY);
         if ($this->lastTimestamp && shm_has_var($memory, $this->lastTimestamp->getValue())) {
             shm_remove_var($memory, $this->lastTimestamp->getValue());
