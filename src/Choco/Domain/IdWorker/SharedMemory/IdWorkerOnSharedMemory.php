@@ -116,6 +116,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
     public function clear() {
         $memory = shm_attach(self::SHM_KEY);
         shm_remove($memory);
+        shm_detach($memory);
     }
 
     function __destruct() {
