@@ -1,9 +1,10 @@
 <?php
 
+use Adachi\Choco\Domain\IdConfig\IdConfig;
 use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
-use Adachi\Choco\Domain\IdConfig\IdConfig;
+use Adachi\Choco\Domain\IdWorker\SharedMemory\IdWorkerOnSharedMemory;
 
 /**
  * Class IdWorkerOnSharedMemoryTest
@@ -50,11 +51,14 @@ class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
      */
     public function createIdValueWithoutDuplication()
     {
+        $config = new IdConfig(41, 5, 5, 4, 1414334507356);
+        $this->idWorker = new IdWorkerOnSharedMemory($config, new RegionId(1), new ServerId(1), 45454);
+        /** @var int $ids */
         $ids = array();
         $expectedCount = 1000;
 
         for ($i = 0; $i < $expectedCount; $i++) {
-            $ids[] = $this->idWorker->generate();
+            $ids[] = $this->idWorker->generate()->toInt();
         }
 
         // unique ids
@@ -70,6 +74,8 @@ class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
      */
     public function createIdValueWithoutDuplicationUnderProcessForks()
     {
+        $config = new IdConfig(41, 5, 5, 4, 1414334507356);
+        $this->idWorker = new IdWorkerOnSharedMemory($config, new RegionId(1), new ServerId(1), 45454);
         $pids = array();
         $loopCount = 100;
         $forkCount = 10;
