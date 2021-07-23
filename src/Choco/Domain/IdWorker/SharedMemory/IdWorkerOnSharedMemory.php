@@ -72,24 +72,47 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
         $sequence = 0;
 
         $timestamp = $this->generateTimestamp();
-        if (shm_has_var($memory, $timestamp->getValue())) {
-            // Get
-            $sequence = (shm_get_var($memory, $timestamp->getValue()) + 1) & $this->config->getSequenceMask();
 
-            if ($sequence > 0) {
-                // Increment sequence
-                shm_put_var($memory, $timestamp->getValue(), $sequence);
-            } else {
-                // Sequence overflowed, rerun
-                usleep(1);
-                shm_detach($memory);
-                sem_release($semaphore);
-                return $this->generate();
+        // Handle warnings when there is not enough shared memory left.
+        $errorReportingLevel = \error_reporting(\E_WARNING);
+
+        \set_error_handler(
+            /**
+             * @param int $severity
+             * @param string $message
+             * @param string $file
+             * @param int $line
+             */
+            function ($severity, $message, $file, $line) {
+                // Clear all data in shared memory.
+                $this->clear();
+                throw new \RuntimeException($message);
             }
-        } else {
-            $sequence = 0;
-            // Reset sequence if timestamp is different from last one.
-            shm_put_var($memory, $timestamp->getValue(), $sequence);
+        );
+
+        try {
+            if (shm_has_var($memory, $timestamp->getValue())) {
+                // Get
+                $sequence = (shm_get_var($memory, $timestamp->getValue()) + 1) & $this->config->getSequenceMask();
+
+                if ($sequence > 0) {
+                    // Increment sequence
+                    shm_put_var($memory, $timestamp->getValue(), $sequence);
+                } else {
+                    // Sequence overflowed, rerun
+                    usleep(1);
+                    shm_detach($memory);
+                    sem_release($semaphore);
+                    return $this->generate();
+                }
+            } else {
+                $sequence = 0;
+                // Reset sequence if timestamp is different from last one.
+                shm_put_var($memory, $timestamp->getValue(), $sequence);
+            }
+        } finally {
+            \restore_error_handler();
+            \error_reporting($errorReportingLevel);
         }
 
         try {
