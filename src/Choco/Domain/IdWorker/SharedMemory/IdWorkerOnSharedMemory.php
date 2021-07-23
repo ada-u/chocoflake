@@ -23,10 +23,20 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
     private $semaphoreId;
 
     /**
+     * @var int
+     */
+    private $memorySize;
+
+    /**
      * Key name of shared memory block
      * @fixme refactor
      */
     const SHM_KEY = 12345;
+
+    /**
+     * Number of processes accessing shared memory
+     */
+    const PROCESS_COUNT = 30;
 
     /**
      * @param IdConfig $config
@@ -44,7 +54,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
         } else {
             $this->semaphoreId = ftok(__FILE__, chr(4));
         }
-        // Calculate the size of shared memory.
+        $this->memorySize = $this->calculateMemorySize($config);
     }
 
     /**
@@ -57,7 +67,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
         sem_acquire($semaphore);
 
         // Attach shared memory
-        $memory = shm_attach(self::SHM_KEY);
+        $memory = shm_attach(self::SHM_KEY, $this->memorySize);
 
         $sequence = 0;
 
@@ -114,17 +124,31 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
      * Call this when shared memory is not freed for some reason and you get an `shm_put_var(): not enough shared memory left` (E_WARNING level) warning
      */
     public function clear() {
-        $memory = shm_attach(self::SHM_KEY);
+        $memory = shm_attach(self::SHM_KEY, $this->memorySize);
         shm_remove($memory);
         shm_detach($memory);
     }
 
     function __destruct() {
         // Release the last inserted shared memory.
-        $memory = shm_attach(self::SHM_KEY);
+        $memory = shm_attach(self::SHM_KEY, $this->memorySize);
         if ($this->lastTimestamp && shm_has_var($memory, $this->lastTimestamp->getValue())) {
             shm_remove_var($memory, $this->lastTimestamp->getValue());
         }
         shm_detach($memory);
+    }
+
+    /**
+     *　Calculates the size of the shared memory required to store the sequence.
+     *
+     * @param IdConfig $config
+     * @return int
+     */
+    private function calculateMemorySize(IdConfig $config)
+    {
+        $headerSize = (PHP_INT_SIZE * 4) + 8;
+        $sequenceSize = (((strlen(serialize($config->getMaxSequence()))+ (4 * PHP_INT_SIZE)) /4 ) * 4 ) + 4;
+        //　Store two variables in shared memory per process.
+        return $headerSize + $sequenceSize * self::PROCESS_COUNT * 2;
     }
 }
