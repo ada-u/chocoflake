@@ -53,6 +53,8 @@ class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
     {
         $config = new IdConfig(41, 5, 5, 4, 1414334507356);
         $this->idWorker = new IdWorkerOnSharedMemory($config, new RegionId(1), new ServerId(1), 45454);
+        // Clear all data in shared memory.
+        $this->idWorker->clear();
         /** @var int $ids */
         $ids = array();
         $expectedCount = 1000;
@@ -64,7 +66,14 @@ class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
         // unique ids
         $actual = array_values(array_unique($ids));
 
-        $this->assertCount($expectedCount, $actual);
+        $messages = "";
+
+        foreach (array_diff($ids, $actual) as $duplicate) {
+            $idValue = $this->idWorker->read($duplicate);
+            $messages .= "value:{$idValue->asString()},timestamp:{$idValue->timestamp},sequence:{$idValue->sequence}\n";
+        }
+
+        $this->assertCount($expectedCount, $actual, "The duplicate ID is as follows:\n{$messages}");
     }
 
     /**
@@ -76,6 +85,9 @@ class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
     {
         $config = new IdConfig(41, 5, 5, 4, 1414334507356);
         $this->idWorker = new IdWorkerOnSharedMemory($config, new RegionId(1), new ServerId(1), 45454);
+        // Clear all data in shared memory.
+        $this->idWorker->clear();
+
         $pids = array();
         $loopCount = 100;
         $forkCount = 10;
@@ -128,6 +140,15 @@ class IdWorkerOnSharedMemoryTest extends PHPUnit_Framework_TestCase
         // unique ids
         $actual = array_values(array_unique($ids));
 
-        $this->assertCount($loopCount * $forkCount, $actual);
+        $messages = "";
+
+        foreach (array_diff($ids, $actual) as $duplicate) {
+            $idValue = $this->idWorker->read($duplicate);
+            $messages .= "value:{$idValue->asString()},timestamp:{$idValue->timestamp},sequence:{$idValue->sequence}\n";
+        }
+
+        $this->assertCount($loopCount * $forkCount,
+                           $actual,
+                           "The duplicate ID is as follows:\n{$messages}");
     }
 }
