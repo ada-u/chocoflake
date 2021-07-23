@@ -127,7 +127,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
             if ($this->lastTimestamp && !$timestamp->equals($this->lastTimestamp)) {
                 // Remove the previous shared memory variable.
                 if ($this->lastTimestamp && shm_has_var($memory, $this->lastTimestamp->getValue())) {
-                    shm_remove_var($memory, $this->lastTimestamp->getValue());
+                    @shm_remove_var($memory, $this->lastTimestamp->getValue());
                 }
             }
 
@@ -156,7 +156,7 @@ class IdWorkerOnSharedMemory extends AbstractIdWorker implements IdWorkerInterfa
         // Release the last inserted shared memory.
         $memory = shm_attach(self::SHM_KEY, $this->memorySize);
         if ($this->lastTimestamp && shm_has_var($memory, $this->lastTimestamp->getValue())) {
-            shm_remove_var($memory, $this->lastTimestamp->getValue());
+            @shm_remove_var($memory, $this->lastTimestamp->getValue());
         }
         shm_detach($memory);
     }
