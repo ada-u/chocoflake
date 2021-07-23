@@ -4,6 +4,7 @@ use Adachi\Choco\Domain\IdValue\Element\RegionId;
 use Adachi\Choco\Domain\IdValue\Element\ServerId;
 use Adachi\Choco\Domain\IdValue\Element\Timestamp;
 use Adachi\Choco\Domain\IdConfig\IdConfig;
+use Adachi\Choco\Domain\IdWorker\Redis\IdWorkerOnRedis;
 
 
 /**
@@ -49,5 +50,118 @@ class IdWorkerOnRedisTest extends PHPUnit_Framework_TestCase
         $id = $this->idWorker->generate();
         $intValue = $this->idWorker->write($id);
         $this->assertEquals($id, $this->idWorker->read($intValue));
+    }
+
+
+    /**
+     * @test
+     */
+    public function createIdValueWithoutDuplication()
+    {
+        $config = new IdConfig(41, 5, 5, 4, 1414334507356);
+        $credential = [
+            'scheme'   => 'tcp',
+            'host'     => '127.0.0.1',
+            'port'     => 6379
+        ];
+        $this->idWorker = new IdWorkerOnRedis($config, new RegionId(1), new ServerId(1), $credential);
+        /** @var int $ids */
+        $ids = array();
+        $expectedCount = 1000;
+
+        for ($i = 0; $i < $expectedCount; $i++) {
+            $ids[] = $this->idWorker->generate()->toInt();
+        }
+
+        // unique ids
+        $actual = array_values(array_unique($ids));
+
+        $messages = "";
+
+        foreach (array_diff($ids, $actual) as $duplicate) {
+            $idValue = $this->idWorker->read($duplicate);
+            $messages .= "value:{$idValue->asString()},timestamp:{$idValue->timestamp},sequence:{$idValue->sequence}\n";
+        }
+
+        $this->assertCount($expectedCount, $actual, "The duplicate ID is as follows:\n{$messages}");
+    }
+
+    /**
+     * @test
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     */
+    public function createIdValueWithoutDuplicationUnderProcessForks()
+    {
+        $config = new IdConfig(41, 5, 5, 4, 1414334507356);
+        $credential = [
+            'scheme'   => 'tcp',
+            'host'     => '127.0.0.1',
+            'port'     => 6379
+        ];
+        $this->idWorker = new IdWorkerOnRedis($config, new RegionId(1), new ServerId(1), $credential);
+
+        $pids = array();
+        $loopCount = 100;
+        $forkCount = 10;
+
+        // Prefix the temporary file for the result output
+        $sharedFilePrefix = tempnam('/var/tmp', get_class($this));
+
+        for ($i = 0; $i < $forkCount; $i++) {
+            // process fork
+            $pid = pcntl_fork();
+            if ($pid == -1) {
+                $this->fail('Failed to fork the process.');
+                break;
+            } else {
+                if ($pid) {
+                    // For the parent process
+                    $pids[] = $pid;
+                } else {
+                    // For child processes
+                    $sharedFile = $sharedFilePrefix . getmypid();
+                    $ids = array();
+                    for ($j = 0; $j < $loopCount; $j++) {
+                        $ids[] = $this->idWorker->generate();
+                    }
+                    // Output the result to a temporary file
+                    file_put_contents($sharedFile, serialize($ids));
+
+                    // Terminate child process
+                    exit;
+                }
+            }
+        }
+        // Waiting for the process to exit
+        $idsArray = array();
+        foreach ($pids as $pid) {
+            pcntl_waitpid($pid, $status);
+
+            // Get the result output of each process.
+            $sharedFile = $sharedFilePrefix . $pid;
+            $idsArray[] = unserialize(file_get_contents($sharedFile));
+
+            // Delete temporary files
+            unlink($sharedFile);
+        }
+
+        // flatten ids
+        $ids = array();
+        array_walk_recursive($idsArray, function($e) use (&$ids) { $ids[] = $e; });
+
+        // unique ids
+        $actual = array_values(array_unique($ids));
+
+        $messages = "";
+
+        foreach (array_diff($ids, $actual) as $duplicate) {
+            $idValue = $this->idWorker->read($duplicate);
+            $messages .= "value:{$idValue->asString()},timestamp:{$idValue->timestamp},sequence:{$idValue->sequence}\n";
+        }
+
+        $this->assertCount($loopCount * $forkCount,
+                           $actual,
+                           "The duplicate ID is as follows:\n{$messages}");
     }
 }
