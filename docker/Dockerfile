@@ -1,4 +1,4 @@
-FROM php:8.1.0beta1-cli
+FROM php:8.2.0beta1-cli
 
 RUN pecl install redis-5.3.4 \
     && pecl install xdebug-3.0.4 \
