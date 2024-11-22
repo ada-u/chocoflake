@@ -15,7 +15,7 @@
   "require": {
     "php": ">=8.0",
     "mockery/mockery": "1.4.* || 1.5.* || 1.6.*",
-    "predis/predis": "1.1.* || 2.0.* || 2.1.* || 2.2.*",
+    "predis/predis": "1.1.* || 2.0.* || 2.1.* || 2.2.* || 2.3.*",
     "ext-sysvsem": "*",
     "ext-sysvshm": "*"
   },
